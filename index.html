@@ -632,10 +632,10 @@ footer{padding:2.5rem 6%;border-top:1px solid var(--border);display:flex;align-i
 
 <script>
 /* ── EMAILJS CONFIG ─── Replace with your actual keys from emailjs.com ── */
-const EJK = "YOUR_PUBLIC_KEY_HERE";
-const EJS = "YOUR_SERVICE_ID_HERE";
-const EJT = "YOUR_TEMPLATE_ID_HERE";
-const EJOT= "YOUR_ORDER_TEMPLATE_ID_HERE";
+const EJK = "zuvVgiiiTo0KSlDgM";
+const EJS = "service_g0cbqcl";
+const EJT = "template_l90q8jo";
+const EJOT= "template_2e6gozu";
 try{emailjs.init(EJK)}catch(e){}
 
 /* ── PRELOADER ── */
@@ -1038,7 +1038,7 @@ function sendOrd(e){
   const orders=JSON.parse(localStorage.getItem("sv_orders")||"[]");
   orders.push({id:Date.now(),name:fd.get("from_name"),email:fd.get("reply_to"),phone:fd.get("phone"),service:fd.get("service"),message:fd.get("message"),budget:fd.get("budget"),status:"Pending",date:new Date().toISOString()});
   localStorage.setItem("sv_orders",JSON.stringify(orders));
-  if(EJK==="YOUR_PUBLIC_KEY_HERE"){setTimeout(()=>{msg.className="fm ok";msg.textContent="✓ Order saved! (Configure EmailJS for email)";btn.textContent="Order Placed ✓";e.target.reset();toast("✓ Order received!");setTimeout(closeOrd,2000)},1000);return}
+  if(EJK==="zuvVgiiiTo0KSlDgM"){setTimeout(()=>{msg.className="fm ok";msg.textContent="✓ Order saved! (Configure EmailJS for email)";btn.textContent="Order Placed ✓";e.target.reset();toast("✓ Order received!");setTimeout(closeOrd,2000)},1000);return}
   emailjs.send(EJS,EJOT,Object.fromEntries(fd)).then(()=>{msg.className="fm ok";msg.textContent="✓ Order sent! I'll contact you within 24 hours.";btn.textContent="Order Placed ✓";e.target.reset();toast("✓ Order received!");setTimeout(closeOrd,2500)}).catch(()=>{msg.className="fm er";msg.textContent="Failed. WhatsApp: +91 9994723048";btn.textContent="Confirm Order →";btn.disabled=false});
 }
 
@@ -1049,7 +1049,7 @@ function sendCt(e){
   btn.textContent="Sending...";btn.disabled=true;
   const p={from_name:document.getElementById("cfn").value,reply_to:document.getElementById("cfe").value,phone:document.getElementById("cfp").value,service:document.getElementById("cfs").value,message:document.getElementById("cfm").value,to_email:"santhoshwe2007@gmail.com"};
   const msgs=JSON.parse(localStorage.getItem("sv_messages")||"[]");msgs.push({id:Date.now(),...p,date:new Date().toISOString()});localStorage.setItem("sv_messages",JSON.stringify(msgs));
-  if(EJK==="YOUR_PUBLIC_KEY_HERE"){setTimeout(()=>{msg.className="fm ok";msg.textContent="✓ Message saved! (Configure EmailJS for real email)";btn.textContent="Sent ✓";document.getElementById("ctf").reset();toast("✓ Message sent!")},900);return}
+  if(EJK==="zuvVgiiiTo0KSlDgM"){setTimeout(()=>{msg.className="fm ok";msg.textContent="✓ Message saved! (Configure EmailJS for real email)";btn.textContent="Sent ✓";document.getElementById("ctf").reset();toast("✓ Message sent!")},900);return}
   emailjs.send(EJS,EJT,p).then(()=>{msg.className="fm ok";msg.textContent="✓ Message sent! I'll reply within 24 hours.";btn.textContent="Sent ✓";document.getElementById("ctf").reset();toast("✓ Message delivered!")}).catch(()=>{msg.className="fm er";msg.textContent="Failed. Email: santhoshwe2007@gmail.com";btn.textContent="Send Message →";btn.disabled=false});
 }
 
