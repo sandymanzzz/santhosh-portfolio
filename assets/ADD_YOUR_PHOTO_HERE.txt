@@ -1,0 +1,15 @@
+PLACE YOUR PHOTO HERE
+=====================
+Save your profile photo as "photo.jpg" in this folder (assets/).
+
+Then open index.html, find this comment:
+  <!-- TO ADD PHOTO: delete the two lines above and uncomment: -->
+  <!-- <img src="photo.jpg" ... -->
+
+And update the src to: "assets/photo.jpg"
+
+Recommended photo specs:
+- Format: JPG or PNG
+- Size: at least 800x1000px
+- Ratio: portrait (4:5)
+- Focus: face centered and visible
