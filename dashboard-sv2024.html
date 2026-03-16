@@ -6,6 +6,7 @@
 <title>Admin Panel — Santhosh V</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="emailjs-config.js"></script>
 <style>
 :root{
   --bg:#060608; --s1:#0d0d12; --s2:#141419; --s3:#1c1c23;
@@ -400,14 +401,10 @@ canvas#posterCanvas{display:block;width:100%;border:1px solid var(--border);marg
 
 <script>
 /* ═══════════════════════════════════════════
-   EMAILJS CONFIG
-   Replace these with your actual keys
+   EMAILJS — reads from emailjs-config.js
+   All keys are in emailjs-config.js only.
 ═══════════════════════════════════════════ */
-const EJK  = "zuvVgiiiTo0KSlDgM";
-const EJS  = "service_g0cbqcl";
-const EJT  = "template_l90q8jo";        // contact template
-const EJOT = "template_2e6gozu";  // order template
-try { emailjs.init(EJK); } catch(e) {}
+// No keys needed here — loaded from emailjs-config.js
 
 /* ═══════════════════════════════════════════
    AUTH
