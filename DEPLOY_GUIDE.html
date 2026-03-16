@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Deployment Guide — Santhosh V Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080808;--s1:#0e0e0e;--s2:#141414;
+  --acc:#c8ff57;--text:#efefef;--t2:#888;--t3:#444;
+  --border:rgba(255,255,255,.07);
+  --green:#4ade80;--amber:#fbbf24;--red:#f87171;--blue:#60a5fa;
+  --ff:'DM Sans',sans-serif;--ffd:'Syne',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:15px;line-height:1.7}
+a{color:var(--acc)}
+::selection{background:var(--acc);color:#080808}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--acc)}
+
+/* layout */
+.shell{max-width:860px;margin:0 auto;padding:0 24px 80px}
+
+/* top nav */
+.topnav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,8,8,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+}
+.topnav-logo{font-family:var(--ffd);font-size:1rem;font-weight:800;display:flex;align-items:center;gap:.5rem}
+.topnav-logo span{background:var(--acc);color:#080808;padding:2px 8px;font-size:.78rem}
+.topnav-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.topnav-links a{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);transition:color .2s}
+.topnav-links a:hover{color:var(--acc)}
+
+/* hero */
+.hero{padding:56px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.hero-tag{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--acc);margin-bottom:12px;display:flex;align-items:center;gap:.6rem}
+.hero-tag::before{content:'';display:block;width:24px;height:1px;background:var(--acc)}
+.hero h1{font-family:var(--ffd);font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;margin-bottom:16px}
+.hero h1 span{color:var(--acc)}
+.hero p{font-size:1rem;color:var(--t2);max-width:560px;line-height:1.75}
+.hero-badges{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:20px}
+.hbadge{padding:.35rem .9rem;border:1px solid var(--border);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t2)}
+.hbadge.acc{border-color:rgba(200,255,87,.3);color:var(--acc);background:rgba(200,255,87,.06)}
+
+/* section */
+.sec{margin-bottom:56px}
+.sec-num{font-family:var(--ffd);font-size:.72rem;font-weight:800;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:.6rem}
+.sec-num::before{content:'';display:block;width:20px;height:1px;background:var(--acc)}
+.sec h2{font-family:var(--ffd);font-size:1.5rem;font-weight:800;letter-spacing:-.03em;margin-bottom:6px}
+.sec-sub{font-size:.88rem;color:var(--t2);margin-bottom:24px;line-height:1.6}
+
+/* step cards */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  gap:0 20px;
+  position:relative;
+}
+.step-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:2px}
+.step-dot{
+  width:32px;height:32px;border-radius:50%;
+  border:1.5px solid var(--acc);
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--ffd);font-size:.78rem;font-weight:800;
+  color:var(--acc);flex-shrink:0;z-index:1;
+}
+.step-line{flex:1;width:1px;background:var(--border);margin:4px 0 0}
+.step:last-child .step-line{display:none}
+.step-body{padding:0 0 32px}
+.step-title{font-family:var(--ffd);font-size:1rem;font-weight:700;margin-bottom:8px;padding-top:4px}
+.step-body p{font-size:.88rem;color:var(--t2);margin-bottom:10px;line-height:1.7}
+.step-body p strong{color:var(--text)}
+
+/* code blocks */
+code{
+  display:inline-block;
+  background:var(--s2);border:1px solid var(--border);
+  padding:.15rem .5rem;
+  font-family:'Courier New',monospace;
+  font-size:.82rem;color:var(--acc);
+  border-radius:2px;
+}
+.code-block{
+  background:var(--s1);border:1px solid var(--border);
+  border-left:2px solid var(--acc);
+  padding:16px 20px;margin:12px 0;
+  font-family:'Courier New',monospace;
+  font-size:.83rem;color:var(--text);
+  line-height:1.8;overflow-x:auto;
+  white-space:pre;
+}
+.code-block .cm{color:var(--t3)}
+.code-block .ky{color:var(--acc)}
+.code-block .vl{color:var(--green)}
+.code-block .st{color:var(--amber)}
+
+/* callout boxes */
+.box{padding:16px 20px;margin:14px 0;border-left:2px solid;font-size:.85rem;line-height:1.65}
+.box.tip{background:rgba(200,255,87,.05);border-color:var(--acc);color:var(--text)}
+.box.warn{background:rgba(251,191,36,.06);border-color:var(--amber);color:var(--text)}
+.box.info{background:rgba(96,165,250,.06);border-color:var(--blue);color:var(--text)}
+.box.done{background:rgba(74,222,128,.06);border-color:var(--green);color:var(--text)}
+.box-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.box.tip .box-label{color:var(--acc)}
+.box.warn .box-label{color:var(--amber)}
+.box.info .box-label{color:var(--blue)}
+.box.done .box-label{color:var(--green)}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem}
+.tbl th{text-align:left;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--t2);padding:.6rem 1rem;border-bottom:1px solid var(--border)}
+.tbl td{padding:.7rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{color:var(--t2)}
+
+/* checklist */
+.chk{list-style:none;display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.chk li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--t2)}
+.chk li::before{content:'☐';color:var(--acc);font-size:1rem;flex-shrink:0;margin-top:1px}
+.chk li.done::before{content:'☑';color:var(--green)}
+
+/* highlight */
+.hl{color:var(--acc);font-weight:500}
+.hl-green{color:var(--green);font-weight:500}
+.hl-amber{color:var(--amber);font-weight:500}
+
+/* img placeholder */
+.img-ph{
+  background:var(--s1);border:1px solid var(--border);
+  height:180px;display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:var(--t3);margin:12px 0;
+  flex-direction:column;gap:.5rem;text-align:center;padding:1rem;
+}
+
+/* divider */
+hr{border:none;border-top:1px solid var(--border);margin:48px 0}
+
+/* progress overview */
+.progress-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.pg-card{background:var(--s1);border:1px solid var(--border);padding:16px 18px}
+.pg-card .pgc-n{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--t2);margin-bottom:4px}
+.pg-card .pgc-v{font-family:var(--ffd);font-size:1.5rem;font-weight:800;color:var(--acc)}
+.pg-card .pgc-s{font-size:.75rem;color:var(--t3);margin-top:3px}
+
+/* folder tree */
+.tree{background:var(--s1);border:1px solid var(--border);padding:20px 24px;font-family:'Courier New',monospace;font-size:.83rem;line-height:2;margin:14px 0}
+.tree .folder{color:var(--acc);font-weight:700}
+.tree .file{color:var(--text)}
+.tree .note{color:var(--t3);font-style:italic}
+
+@media(max-width:600px){
+  .progress-grid{grid-template-columns:1fr 1fr}
+  .topnav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="topnav">
+  <div class="topnav-logo"><span>SV</span> Deployment Guide</div>
+  <div class="topnav-links">
+    <a href="#phase1">Files</a>
+    <a href="#phase2">GitHub</a>
+    <a href="#phase3">Vercel</a>
+    <a href="#phase4">EmailJS</a>
+    <a href="#phase5">Admin</a>
+    <a href="#phase6">Live</a>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Complete Setup Guide</div>
+  <h1>Deploy Your Portfolio<br><span>Free. Step by Step.</span></h1>
+  <p>Everything you need — from downloading the files to having a live portfolio with working email, admin panel, and delivery tracker. Follow in order and you'll be live in under 30 minutes.</p>
+  <div class="hero-badges">
+    <span class="hbadge acc">Total Cost: ₹0</span>
+    <span class="hbadge">GitHub — Free Hosting</span>
+    <span class="hbadge">Vercel — Free Deployment</span>
+    <span class="hbadge">EmailJS — Free Email</span>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="progress-grid">
+  <div class="pg-card"><div class="pgc-n">Phase 1</div><div class="pgc-v">Files</div><div class="pgc-s">Organise your folder</div></div>
+  <div class="pg-card"><div class="pgc-n">Phase 2</div><div class="pgc-v">GitHub</div><div class="pgc-s">Upload to cloud</div></div>
+  <div class="pg-card"><div class="pgc-n">Phase 3</div><div class="pgc-v">Vercel</div><div class="pgc-s">Make it live</div></div>
+  <div class="pg-card"><div class="pgc-n">Phase 4</div><div class="pgc-v">EmailJS</div><div class="pgc-s">Set up auto email</div></div>
+  <div class="pg-card"><div class="pgc-n">Phase 5</div><div class="pgc-v">Admin</div><div class="pgc-s">Secure your panel</div></div>
+  <div class="pg-card"><div class="pgc-n">Phase 6</div><div class="pgc-v">Test</div><div class="pgc-s">Verify everything</div></div>
+</div>
+
+<hr id="phase1"/>
+
+<!-- ═══ PHASE 1 — FILES ═══ -->
+<div class="sec">
+  <div class="sec-num">Phase 1</div>
+  <h2>Organise Your Files</h2>
+  <p class="sec-sub">Before anything else, get your folder clean and ready on your computer.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Create the project folder</div>
+        <p>On your Desktop or Documents, create a new folder. Name it exactly:</p>
+        <div class="code-block"><span class="vl">santhosh-portfolio</span></div>
+        <div class="box tip"><div class="box-label">Tip</div>No spaces in the folder name. This name will be part of your website URL on Vercel.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Download all files from Claude and save them</div>
+        <p>Download every file that was generated and place them like this:</p>
+        <div class="tree">
+<span class="folder">santhosh-portfolio/</span>
+│
+├── <span class="file">index.html</span>              <span class="note">← Main portfolio website</span>
+├── <span class="file">dashboard-sv2024.html</span>   <span class="note">← Admin panel</span>
+├── <span class="file">DEPLOY_GUIDE.html</span>       <span class="note">← This guide</span>
+│
+└── <span class="folder">assets/</span>
+    └── <span class="file">photo.jpg</span>           <span class="note">← YOUR photo (add this)</span></div>
+        <div class="box warn"><div class="box-label">Important</div>The <strong>assets/</strong> folder must be inside <strong>santhosh-portfolio/</strong>. Do not rename any of the HTML files — their exact filenames are used in links.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Add your profile photo</div>
+        <p>Save your profile photo as <code>photo.jpg</code> inside the <code>assets/</code> folder.</p>
+        <p>Then open <code>index.html</code> in Notepad or VS Code. Press <strong>Ctrl+F</strong> and search for:</p>
+        <div class="code-block">TO ADD PHOTO</div>
+        <p>Find these 2 lines and <strong>delete them</strong>:</p>
+        <div class="code-block">&lt;div class="acard-mono"&gt;SV&lt;/div&gt;
+&lt;p class="acard-hint"&gt;Add your photo&lt;/p&gt;</div>
+        <p>Paste this <strong>in their place</strong>:</p>
+        <div class="code-block">&lt;img src="assets/photo.jpg" alt="Santhosh V"
+     style="position:absolute;inset:0;width:100%;
+            height:100%;object-fit:cover;object-position:top"&gt;</div>
+        <p>Save the file. <span class="hl-green">Photo is now connected ✓</span></p>
+        <div class="box info"><div class="box-label">Photo Tips</div>Best size: at least 600×750px portrait. JPG format. Make sure your face is centred. If you don't have a photo yet, skip this — the monogram will show instead.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">4</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Update your social media links</div>
+        <p>Open <code>index.html</code> in a text editor. Press <strong>Ctrl+F</strong> and search for:</p>
+        <div class="code-block">href="#" class="soc"</div>
+        <p>You'll find 4 of them. Replace each <code>#</code> with your real profile links:</p>
+        <div class="code-block"><span class="cm">Instagram:</span>  https://instagram.com/<span class="ky">YOUR_USERNAME</span>
+<span class="cm">YouTube:</span>   https://youtube.com/@<span class="ky">YOUR_CHANNEL</span>
+<span class="cm">LinkedIn:</span>   https://linkedin.com/in/<span class="ky">YOUR_PROFILE</span>
+<span class="cm">WhatsApp:</span>   Already set to +91 9994723048 ✓</div>
+        <p>Save the file.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr id="phase2"/>
+
+<!-- ═══ PHASE 2 — GITHUB ═══ -->
+<div class="sec">
+  <div class="sec-num">Phase 2</div>
+  <h2>Upload to GitHub</h2>
+  <p class="sec-sub">GitHub stores your files in the cloud so Vercel can deploy them. It's free and takes 5 minutes.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Create a free GitHub account</div>
+        <p>Go to <a href="https://github.com" target="_blank">github.com</a> and click <strong>Sign Up</strong>.</p>
+        <p>Use any email — I suggest the same Gmail you use for EmailJS: <code>santhoshwe2007@gmail.com</code></p>
+        <p>Complete the signup, verify your email. Done.</p>
+        <div class="box done"><div class="box-label">Already have GitHub?</div>Just log in and skip to the next step.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Create a new repository</div>
+        <p>After logging in, click the <strong>+</strong> icon (top right) → <strong>New repository</strong></p>
+        <p>Fill in the form exactly like this:</p>
+        <table class="tbl">
+          <thead><tr><th>Field</th><th>What to enter</th></tr></thead>
+          <tbody>
+            <tr><td>Repository name</td><td><code>santhosh-portfolio</code></td></tr>
+            <tr><td>Description</td><td>My portfolio website (optional)</td></tr>
+            <tr><td>Visibility</td><td>✅ Public (required for free Vercel)</td></tr>
+            <tr><td>Add README</td><td>Leave unchecked</td></tr>
+          </tbody>
+        </table>
+        <p>Click the green <strong>Create repository</strong> button.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Upload your files to GitHub</div>
+        <p>On your new empty repository page, look for the link that says <strong>"uploading an existing file"</strong> — click it.</p>
+        <p>You'll see a drag-and-drop area. Now:</p>
+        <p><strong>1.</strong> Open your <code>santhosh-portfolio</code> folder on your computer</p>
+        <p><strong>2.</strong> Select ALL files: <code>index.html</code>, <code>dashboard-sv2024.html</code>, <code>DEPLOY_GUIDE.html</code></p>
+        <p><strong>3.</strong> Also drag the entire <code>assets</code> folder into the upload area</p>
+        <p><strong>4.</strong> Wait for all files to upload (green checkmarks appear)</p>
+        <div class="box warn"><div class="box-label">Important</div>GitHub doesn't preserve folder structure when you drag files directly. You must also drag the <strong>assets folder</strong> separately or GitHub will ignore it. Alternatively, drag the entire <code>santhosh-portfolio</code> folder into the upload area.</div>
+        <p><strong>5.</strong> Scroll down to the "Commit changes" section</p>
+        <p><strong>6.</strong> Leave the commit message as default or type: <code>Initial upload</code></p>
+        <p><strong>7.</strong> Click the green <strong>Commit changes</strong> button</p>
+        <p>Your files are now on GitHub. <span class="hl-green">✓</span></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr id="phase3"/>
+
+<!-- ═══ PHASE 3 — VERCEL ═══ -->
+<div class="sec">
+  <div class="sec-num">Phase 3</div>
+  <h2>Deploy on Vercel — Make It Live</h2>
+  <p class="sec-sub">Vercel reads your GitHub files and gives you a live URL instantly. Free forever for personal portfolios.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Create a Vercel account</div>
+        <p>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> → click <strong>Sign Up</strong></p>
+        <p>Choose <strong>Continue with GitHub</strong> — this connects them automatically.</p>
+        <p>Authorise Vercel when GitHub asks for permission. You'll land on the Vercel dashboard.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Import your repository</div>
+        <p>On the Vercel dashboard, click <strong>Add New…</strong> → <strong>Project</strong></p>
+        <p>You'll see a list of your GitHub repositories. Find <strong>santhosh-portfolio</strong> and click <strong>Import</strong>.</p>
+        <div class="box tip"><div class="box-label">Don't see your repo?</div>Click "Adjust GitHub App Permissions" and grant Vercel access to your santhosh-portfolio repository.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Configure and deploy</div>
+        <p>On the configuration screen, you don't need to change anything. Leave all settings as default:</p>
+        <table class="tbl">
+          <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Framework Preset</td><td>Other (leave as is)</td></tr>
+            <tr><td>Root Directory</td><td>/ (leave as is)</td></tr>
+            <tr><td>Build Command</td><td>Leave empty</td></tr>
+            <tr><td>Output Directory</td><td>Leave empty</td></tr>
+          </tbody>
+        </table>
+        <p>Click the big <strong>Deploy</strong> button. Vercel builds in 10–20 seconds.</p>
+        <p>You'll see a congratulations screen with your live URL. It looks like:</p>
+        <div class="code-block"><span class="vl">https://santhosh-portfolio.vercel.app</span></div>
+        <div class="box done"><div class="box-label">Your site is live!</div>Click "Visit" to open your portfolio. Share this link with anyone — it's your live portfolio URL.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">4</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Rename your URL (optional but recommended)</div>
+        <p>In the Vercel dashboard, open your project → <strong>Settings</strong> → <strong>Domains</strong></p>
+        <p>You can change the free subdomain. For example:</p>
+        <div class="code-block">santhoshv.vercel.app
+santhoshdesigns.vercel.app
+santhoshcreates.vercel.app</div>
+        <p>Type your preferred name, click <strong>Add</strong>. Vercel checks if it's available and sets it up instantly.</p>
+        <div class="box info"><div class="box-label">Custom domain like santhoshv.in?</div>Buy from GoDaddy or Bigrock (~₹600/year). Then go to Vercel → Settings → Domains → Add your domain → Follow the DNS instructions shown. Takes 5–10 minutes to go live.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">5</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">How to update your site in the future</div>
+        <p>Vercel auto-deploys whenever you update your GitHub files. To update:</p>
+        <p><strong>1.</strong> Go to your GitHub repo → click on the file you want to edit (e.g. <code>index.html</code>)</p>
+        <p><strong>2.</strong> Click the <strong>pencil icon</strong> (Edit this file)</p>
+        <p><strong>3.</strong> Make your changes → scroll down → click <strong>Commit changes</strong></p>
+        <p><strong>4.</strong> Vercel detects the change and deploys automatically in ~20 seconds</p>
+        <div class="box tip"><div class="box-label">Tip</div>You can also drag new files (like portfolio images) directly to your GitHub repo by going to the repo page → <strong>Add file</strong> → <strong>Upload files</strong>.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr id="phase4"/>
+
+<!-- ═══ PHASE 4 — EMAILJS ═══ -->
+<div class="sec">
+  <div class="sec-num">Phase 4</div>
+  <h2>Set Up EmailJS — Auto Email</h2>
+  <p class="sec-sub">This makes every contact form message and order automatically emailed to <strong>santhoshwe2007@gmail.com</strong>. Free up to 200 emails/month — more than enough.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Create EmailJS account</div>
+        <p>Go to <a href="https://emailjs.com" target="_blank">emailjs.com</a> → click <strong>Sign Up</strong></p>
+        <p>Sign up with your Gmail: <code>santhoshwe2007@gmail.com</code></p>
+        <p>Verify your email via the confirmation link sent to your inbox.</p>
+        <p>Log in to the EmailJS dashboard.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Add Gmail as your email service</div>
+        <p>In the EmailJS dashboard sidebar, click <strong>Email Services</strong> → <strong>Add New Service</strong></p>
+        <p>From the list, choose <strong>Gmail</strong></p>
+        <p>Click <strong>Connect Account</strong> → a Google popup opens → sign in with <code>santhoshwe2007@gmail.com</code></p>
+        <p>Allow EmailJS the permissions it asks for (read, compose, send)</p>
+        <p>Back on the form:</p>
+        <table class="tbl">
+          <thead><tr><th>Field</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Service Name</td><td><code>portfolio_service</code></td></tr>
+          </tbody>
+        </table>
+        <p>Click <strong>Create Service</strong></p>
+        <p>You'll see a Service ID appear. It looks like <code>service_abc1234</code>. <strong>Copy and save this somewhere.</strong></p>
+        <div class="box warn"><div class="box-label">Save This!</div>You need this Service ID in Step 7. Keep it in a Notepad file for now.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Create Template 1 — Contact Form Email</div>
+        <p>Sidebar → <strong>Email Templates</strong> → <strong>Create New Template</strong></p>
+        <p>Fill the template like this:</p>
+        <table class="tbl">
+          <thead><tr><th>Field</th><th>Value (copy exactly)</th></tr></thead>
+          <tbody>
+            <tr><td>Template Name</td><td>Contact Form</td></tr>
+            <tr><td>Subject</td><td><code>New Message from {{from_name}} — Portfolio</code></td></tr>
+            <tr><td>To Email</td><td><code>santhoshwe2007@gmail.com</code></td></tr>
+          </tbody>
+        </table>
+        <p>In the <strong>Content / Body</strong> area, paste this exactly:</p>
+        <div class="code-block">Hello Santhosh,
+
+You have a new message from your portfolio!
+
+Name:    {{from_name}}
+Email:   {{reply_to}}
+Phone:   {{phone}}
+Service: {{service}}
+
+Message:
+{{message}}
+
+---
+Reply directly to this email to respond to the client.</div>
+        <p>Click <strong>Save</strong></p>
+        <p>The Template ID appears — looks like <code>template_xyz7890</code>. <strong>Save this too.</strong></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">4</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Create Template 2 — Order Email</div>
+        <p>Click <strong>Create New Template</strong> again for orders:</p>
+        <table class="tbl">
+          <thead><tr><th>Field</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Template Name</td><td>Order Request</td></tr>
+            <tr><td>Subject</td><td><code>🛒 New Order: {{service}} from {{from_name}}</code></td></tr>
+            <tr><td>To Email</td><td><code>santhoshwe2007@gmail.com</code></td></tr>
+          </tbody>
+        </table>
+        <p>Body content:</p>
+        <div class="code-block">🛒 NEW ORDER RECEIVED!
+
+Client:  {{from_name}}
+Email:   {{reply_to}}
+Phone:   {{phone}}
+Service: {{service}}
+Budget:  {{budget}}
+
+Project Brief:
+{{message}}
+
+---
+Login to your admin panel to update the delivery tracker.
+Admin URL: your-vercel-url.vercel.app/dashboard-sv2024.html</div>
+        <p>Click <strong>Save</strong>. Save the Template ID (e.g. <code>template_order456</code>).</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">5</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Get your Public Key</div>
+        <p>In the EmailJS dashboard, click your <strong>profile icon</strong> (top right) → <strong>Account</strong></p>
+        <p>Under the <strong>General</strong> tab, find the section called <strong>Public Key</strong></p>
+        <p>Copy it. It looks like: <code>AbCdEfGhIjKlMnOp</code></p>
+        <p><strong>Save this too — this is the last key you need.</strong></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">6</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">You should now have 4 keys saved:</div>
+        <div class="code-block"><span class="cm">Public Key:              </span><span class="ky">AbCdEfGhIjKlMnOp</span>
+<span class="cm">Service ID:              </span><span class="ky">service_abc1234</span>
+<span class="cm">Contact Template ID:     </span><span class="ky">template_xyz7890</span>
+<span class="cm">Order Template ID:       </span><span class="ky">template_order456</span></div>
+        <div class="box warn"><div class="box-label">Before continuing</div>Make sure you have all 4 keys. If any is missing, go back to the EmailJS dashboard to find it under Email Services or Email Templates.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">7</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Add the keys to index.html</div>
+        <p>Open <code>index.html</code> in a text editor. Press <strong>Ctrl+F</strong> and search for:</p>
+        <div class="code-block">YOUR_PUBLIC_KEY_HERE</div>
+        <p>You'll find this block near the bottom of the file in the JavaScript section:</p>
+        <div class="code-block"><span class="ky">const</span> <span class="vl">EJK</span>  = <span class="st">"YOUR_PUBLIC_KEY_HERE"</span>;
+<span class="ky">const</span> <span class="vl">EJS</span>  = <span class="st">"YOUR_SERVICE_ID_HERE"</span>;
+<span class="ky">const</span> <span class="vl">EJT</span>  = <span class="st">"YOUR_TEMPLATE_ID_HERE"</span>;
+<span class="ky">const</span> <span class="vl">EJOT</span> = <span class="st">"YOUR_ORDER_TEMPLATE_ID_HERE"</span>;</div>
+        <p>Replace each placeholder with your actual key:</p>
+        <div class="code-block"><span class="ky">const</span> <span class="vl">EJK</span>  = <span class="st">"AbCdEfGhIjKlMnOp"</span>;        <span class="cm">← Public Key</span>
+<span class="ky">const</span> <span class="vl">EJS</span>  = <span class="st">"service_abc1234"</span>;           <span class="cm">← Service ID</span>
+<span class="ky">const</span> <span class="vl">EJT</span>  = <span class="st">"template_xyz7890"</span>;          <span class="cm">← Contact template</span>
+<span class="ky">const</span> <span class="vl">EJOT</span> = <span class="st">"template_order456"</span>;          <span class="cm">← Order template</span></div>
+        <p>Save the file.</p>
+        <div class="box done"><div class="box-label">Email is now active ✓</div>Every contact form submission and every order will automatically send an email to santhoshwe2007@gmail.com.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">8</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Upload the updated index.html to GitHub</div>
+        <p>Go to your GitHub repo → click on <strong>index.html</strong> → click the <strong>pencil (edit) icon</strong></p>
+        <p>Delete all the old content and paste your updated <code>index.html</code> code</p>
+        <p>Scroll down → click <strong>Commit changes</strong></p>
+        <p>Vercel automatically re-deploys in ~20 seconds. Email is now live on your website.</p>
+        <div class="box info"><div class="box-label">Faster method</div>If you have the file saved on your computer, go to GitHub repo → Add file → Upload files → drag the updated index.html → Commit. It will overwrite the old one automatically.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr id="phase5"/>
+
+<!-- ═══ PHASE 5 — ADMIN PANEL ═══ -->
+<div class="sec">
+  <div class="sec-num">Phase 5</div>
+  <h2>Secure & Use Your Admin Panel</h2>
+  <p class="sec-sub">The admin panel is your control centre. Keep the URL private — it's not linked from the public site.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Your admin panel URL</div>
+        <p>Once your site is live on Vercel, your admin panel is at:</p>
+        <div class="code-block"><span class="vl">https://YOUR-SITE.vercel.app/dashboard-sv2024.html</span></div>
+        <p>For example if your site is <code>santhosh-portfolio.vercel.app</code>, the admin panel is:</p>
+        <div class="code-block"><span class="vl">https://santhosh-portfolio.vercel.app/dashboard-sv2024.html</span></div>
+        <div class="box tip"><div class="box-label">Bookmark this!</div>Add this URL to your phone's home screen and browser bookmarks. You'll use it to manage orders every time a client books a service.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Login credentials</div>
+        <table class="tbl">
+          <thead><tr><th>Field</th><th>Default Value</th></tr></thead>
+          <tbody>
+            <tr><td>Username</td><td><code>admin</code></td></tr>
+            <tr><td>Password</td><td><code>santhosh2024</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Change your admin password (important)</div>
+        <p>Open <code>dashboard-sv2024.html</code> in a text editor. Press <strong>Ctrl+F</strong> and search for:</p>
+        <div class="code-block">santhosh2024</div>
+        <p>You'll find this line:</p>
+        <div class="code-block"><span class="ky">const</span> <span class="vl">AU</span> = <span class="st">"admin"</span>, <span class="vl">AP</span> = <span class="st">"santhosh2024"</span>;</div>
+        <p>Change the password to something only you know:</p>
+        <div class="code-block"><span class="ky">const</span> <span class="vl">AU</span> = <span class="st">"admin"</span>, <span class="vl">AP</span> = <span class="st">"YourSecurePassword@123"</span>;</div>
+        <p>Save the file and re-upload to GitHub (same method as before).</p>
+        <div class="box warn"><div class="box-label">Don't forget!</div>After changing the password, write it down somewhere safe. If you forget it, you'll need to edit the file again on GitHub.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">4</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">What each admin page does</div>
+        <table class="tbl">
+          <thead><tr><th>Page</th><th>What you can do</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Dashboard</strong></td><td>Quick stats: total orders, reviews, avg rating, recent activity</td></tr>
+            <tr><td><strong>Orders</strong></td><td>See every order placed on your site. Update status. Click "Track" to create delivery tracker.</td></tr>
+            <tr><td><strong>Delivery Tracker</strong></td><td>5-stage visual progress bar per client. Set deadline, write notes, advance stages with one click.</td></tr>
+            <tr><td><strong>Reviews</strong></td><td>Approve/hide/edit/delete visitor reviews. Generate downloadable poster image from any review.</td></tr>
+            <tr><td><strong>Portfolio</strong></td><td>Add new work, edit existing projects, add real images from imgbb.com URLs.</td></tr>
+            <tr><td><strong>Services</strong></td><td>Edit your service prices and descriptions. Add new services. See market pricing reference.</td></tr>
+            <tr><td><strong>Messages</strong></td><td>All contact form submissions stored here even if email fails.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">5</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">How to use the Delivery Tracker for each client</div>
+        <p><strong>When a client places an order:</strong></p>
+        <p>1. You get an email from EmailJS with their order details</p>
+        <p>2. Open admin panel → <strong>Orders</strong> page</p>
+        <p>3. Find their order → click the <strong class="hl">Track</strong> button (green)</p>
+        <p>4. Their details auto-fill in the Delivery Tracker form</p>
+        <p>5. Set the estimated delivery date → add a note → click <strong>Save Tracker</strong></p>
+        <p><strong>As work progresses:</strong></p>
+        <p>6. Go to the tracker card → click <strong>Next Stage →</strong> to advance</p>
+        <p>7. Click <strong>Edit</strong> to update the note at any stage (e.g. "Design done, sending for review")</p>
+        <p>8. When done → advance to Stage 5: <span class="hl-green">Delivered ✓</span></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">6</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">How to generate and download a Review Poster</div>
+        <p>When a client leaves a good review, turn it into a shareable image in 3 clicks:</p>
+        <p>1. Admin panel → <strong>Reviews</strong> page</p>
+        <p>2. Find the review → click the <span class="hl">Poster</span> button</p>
+        <p>3. Or: scroll to the top of the Reviews page → use the <strong>Review Poster Generator</strong></p>
+        <p>4. Select review from dropdown → choose Dark / Lime / Minimal style</p>
+        <p>5. Edit the tagline text if needed</p>
+        <p>6. Click <strong>Download PNG</strong> — saves a 1080×1080px image</p>
+        <p>7. Post it on Instagram, WhatsApp status, or Stories</p>
+        <div class="box done"><div class="box-label">What the poster includes</div>Star rating, full review quote, client name & role, your SS logo, and your tagline — all branded with your aesthetic.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-dot-col"><div class="step-dot">7</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">How to add real portfolio images</div>
+        <p>Right now your portfolio shows SVG design compositions. To show your actual work:</p>
+        <p><strong>1.</strong> Go to <a href="https://imgbb.com" target="_blank">imgbb.com</a> → click <strong>Start Uploading</strong></p>
+        <p><strong>2.</strong> Upload your thumbnail/poster/logo image</p>
+        <p><strong>3.</strong> After upload, click on the image → copy the <strong>Direct Link</strong> URL (ends in .jpg or .png)</p>
+        <p><strong>4.</strong> Admin panel → <strong>Portfolio</strong> → find the item → click <strong>Edit</strong></p>
+        <p><strong>5.</strong> Paste the imgbb URL in the <strong>Image URL</strong> field → Save</p>
+        <p>Your real image now shows on the portfolio site instantly.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr id="phase6"/>
+
+<!-- ═══ PHASE 6 — TEST ═══ -->
+<div class="sec">
+  <div class="sec-num">Phase 6</div>
+  <h2>Test Everything Before Sharing</h2>
+  <p class="sec-sub">Go through this checklist on your live Vercel URL before sending it to anyone.</p>
+
+  <ul class="chk">
+    <li>Open your live URL on a desktop browser — site loads fully</li>
+    <li>Open on your mobile phone — fully responsive, name visible, scrolls smoothly</li>
+    <li>SANTHOSH name appears in full on the hero section</li>
+    <li>All sections visible: Hero, About, Portfolio, Services, Reviews, Contact</li>
+    <li>Portfolio grid shows SVG designs (or real images if you added them)</li>
+    <li>Filter buttons on portfolio work (All / Thumbnails / Posters / Logos / Websites)</li>
+    <li>Click any "Order →" button — modal opens with correct service pre-filled</li>
+    <li>Fill the order form with your own details → submit → check Gmail inbox for the order email</li>
+    <li>Fill the contact form at bottom → submit → check Gmail for contact email</li>
+    <li>Submit a test review → it appears on the reviews carousel</li>
+    <li>Open admin URL in a new tab → login works</li>
+    <li>Admin → Orders → test order appears</li>
+    <li>Admin → Orders → click "Track" on the test order → tracker form pre-fills</li>
+    <li>Save the tracker → it appears in Delivery Tracker page</li>
+    <li>Click "Next Stage →" a few times → stages advance with animation</li>
+    <li>Admin → Reviews → your test review appears → click "Poster" → generates image</li>
+    <li>Click "Download PNG" → file saves to your device</li>
+    <li>Admin → Portfolio → Add a test item → appears on portfolio grid</li>
+  </ul>
+
+  <div class="box done" style="margin-top:24px">
+    <div class="box-label">All checked? You're live!</div>
+    Share your Vercel URL on Instagram bio, WhatsApp status, and LinkedIn. Your portfolio is ready to take clients.
+  </div>
+</div>
+
+<hr/>
+
+<!-- TROUBLESHOOTING -->
+<div class="sec">
+  <div class="sec-num">Help</div>
+  <h2>Troubleshooting Common Issues</h2>
+
+  <table class="tbl" style="margin-top:16px">
+    <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>Name "SANTHO" appears cut off</td><td>The fix was already applied in the latest index.html. Re-download and re-upload.</td></tr>
+      <tr><td>Email not arriving in Gmail</td><td>1. Check EmailJS dashboard for error logs. 2. Verify all 4 keys are correct in index.html with no extra spaces. 3. Check Gmail spam folder. 4. Make sure Gmail service is connected in EmailJS.</td></tr>
+      <tr><td>Admin panel login not working</td><td>Password is case-sensitive. Default is <code>santhosh2024</code>. If you changed it, open dashboard-sv2024.html on GitHub and check the AP variable.</td></tr>
+      <tr><td>Portfolio shows SVG designs, not my images</td><td>Add real images via imgbb.com and paste the URL in Admin → Portfolio → Edit item → Image URL field.</td></tr>
+      <tr><td>Reviews not saving between visits</td><td>Reviews use localStorage — they're tied to the browser on your Vercel domain. Works fine once hosted. On local file:// URLs it may not persist.</td></tr>
+      <tr><td>Photo not showing in About section</td><td>Make sure file is exactly <code>photo.jpg</code> (lowercase) inside the <code>assets/</code> folder, and you updated the img tag in index.html.</td></tr>
+      <tr><td>Vercel shows 404 error</td><td>Make sure index.html is in the root of your repo (not inside a subfolder). Go to GitHub repo and confirm index.html is visible at the top level.</td></tr>
+      <tr><td>Fonts look different / not loading</td><td>Fonts load from Google CDN and need an internet connection. On slow connections they may fall back to system fonts temporarily.</td></tr>
+      <tr><td>Review poster download not working</td><td>Safari sometimes blocks canvas downloads. Use Chrome or Firefox to download posters.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr/>
+
+<!-- COST SUMMARY -->
+<div class="sec">
+  <div class="sec-num">Summary</div>
+  <h2>Total Cost Breakdown</h2>
+
+  <table class="tbl" style="margin-top:16px">
+    <thead><tr><th>Service</th><th>What it does</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>GitHub</td><td>Stores your website files in the cloud</td><td><span class="hl-green">Free forever</span></td></tr>
+      <tr><td>Vercel</td><td>Hosts your live website with fast CDN</td><td><span class="hl-green">Free forever</span></td></tr>
+      <tr><td>EmailJS</td><td>Sends automatic emails (200/month free)</td><td><span class="hl-green">Free</span></td></tr>
+      <tr><td>Google Fonts</td><td>Loads Syne + DM Sans typography</td><td><span class="hl-green">Free forever</span></td></tr>
+      <tr><td>imgbb.com</td><td>Hosts your portfolio images</td><td><span class="hl-green">Free forever</span></td></tr>
+      <tr><td>.vercel.app domain</td><td>yourname.vercel.app URL</td><td><span class="hl-green">Free forever</span></td></tr>
+      <tr><td>Custom domain (optional)</td><td>yourname.in / yourname.com</td><td><span class="hl-amber">~₹600–₹900/year</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:24px;padding:20px 24px;background:var(--s1);border:1px solid rgba(200,255,87,.2);border-left:2px solid var(--acc)">
+    <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:8px">Portfolio Details</div>
+    <div style="font-family:var(--ffd);font-size:1.1rem;font-weight:700;margin-bottom:4px">Santhosh V — Graphic Designer & Web Developer</div>
+    <div style="font-size:.85rem;color:var(--t2)">📞 +91 9994723048 &nbsp;·&nbsp; ✉️ santhoshwe2007@gmail.com &nbsp;·&nbsp; 📍 Tamil Nadu, India</div>
+  </div>
+</div>
+
+</div><!-- /shell -->
+</body>
+</html>
